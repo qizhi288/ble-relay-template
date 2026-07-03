@@ -17,7 +17,7 @@
 本仓库的 **MCP 服务器（`bridge/index.js`）和部署方式（Railway）** 沿用了原仓库 [vickyldr/svakom-ble-ai](https://github.com/vickyldr/svakom-ble-ai) 的架构。
 
 本仓库做了以下改动：
-1. **删除了写死的 `index.html`**：改为由用户用 AI 生成，适配自己的设备
+1. **不再包含 `index.html`**：改为由用户用 AI 生成，适配自己的设备
 2. **关闭了 `/toy` 接口的密码验证**：小手机连接时不需要密码
 
 简单说：**部署方式没变，设备适配方式变了。**
