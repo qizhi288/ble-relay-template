@@ -78,6 +78,8 @@
 
 无声音频保活 URL：https://img.heliar.top/file/1772516513350_30min-osbvow_2.mp4
 
+轮询接口路径是 `/toy-next`，返回格式是 `{"command":{"action":"intensity","value":50}}`，解析时用 `action` 字段。
+
 请帮我生成一个蓝牙连接 MCP 服务器的中继 HTML，包含：连接 MCP 服务器、连接蓝牙、强度控制、测试、停止、续命、轮询、日志、无声音频保活。
 
 3. **保存文件**
