@@ -82,7 +82,7 @@
 - 加热：指令格式 [请替换，没有就写"无"]
 - 其他功能：[请替换]
 
-无声音频保活 URL：https://img.baibai.cv/f/dZymTQ/30min-osbvow%202.mp4
+无声音频保活 URL：https://img.baibai.cv/f/dZymTQ/30min-osbvow%202.mp4 
 
 MCP 轮询接口说明：
 - 路径：/toy-next
@@ -110,6 +110,10 @@ MCP 轮询接口说明：
 - 服务 UUID 和特征 UUID 必须使用字符串格式，例如 'FFE0' 而不是 0xFFE0
 
 请生成完整的 HTML 代码。
+
+
+（保活音频来源discard尾巴镇社区笨蛋酱老师）
+
 
 ### 3. 保存文件
 
