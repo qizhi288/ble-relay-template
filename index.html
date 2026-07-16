@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>XHTKJ BLE Relay</title>
+<style>
+body {
+  font-family: Arial;
+  padding: 30px;
+}
+button {
+  font-size: 20px;
+  padding: 15px;
+}
+#status {
+  margin-top:20px;
+}
+</style>
+</head>
+
+<body>
+
+<h2>XHTKJ BLE Relay</h2>
+
+<button onclick="connectBLE()">连接设备</button>
+
+<div id="status">
+等待连接...
+</div>
+
+
+<script>
+
+let device;
+let server;
+let service;
+
+let writeChar;
+let notifyChar;
+
+
+// 你的设备 UUID
+const SERVICE_UUID = 0xAE00;
+const WRITE_UUID = 0xAE01;
+const NOTIFY_UUID = 0xAE02;
+
+
+function log(text){
+    document.getElementById("status").innerHTML = text;
+}
+
+
+async function connectBLE(){
+
+try{
+
+log("正在搜索 XHTKJ...");
+
+device = await navigator.bluetooth.requestDevice({
+    filters:[
+        {
+            name:"XHTKJ"
+        }
+    ],
+    optionalServices:[
+        SERVICE_UUID
+    ]
+});
+
+
+log("正在连接...");
+
+server = await device.gatt.connect();
+
+
+service = await server.getPrimaryService(SERVICE_UUID);
+
+
+writeChar = await service.getCharacteristic(WRITE_UUID);
+
+notifyChar = await service.getCharacteristic(NOTIFY_UUID);
+
+
+await notifyChar.startNotifications();
+
+
+notifyChar.addEventListener(
+"characteristicvaluechanged",
+(event)=>{
+
+let value = event.target.value;
+
+console.log(
+"收到:",
+Array.from(
+new Uint8Array(value.buffer)
+)
+);
+
+});
+
+
+log("✅ XHTKJ 已连接<br>AE01/AE02 已找到");
+
+
+}
+catch(e){
+
+console.log(e);
+
+log(
+"❌ 连接失败: "
++ e.message
+);
+
+}
+
+
+}
+
+
+</script>
+
+</body>
+</html>
