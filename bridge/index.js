@@ -168,6 +168,39 @@ app.post('/', (req, res) => {
   res.json({ jsonrpc: '2.0', id: id, result: {} });
 });
 
+// 队列执行器
+setInterval(async () => {
+  if (!toyQueue.command) return;
+
+  const cmd = toyQueue.command;
+
+  console.log('🚀 执行设备命令:', cmd);
+
+  if (cmd.action === 'intensity') {
+    await setSvakomSpeed(cmd.value);
+  }
+
+  if (cmd.action === 'stop') {
+    await stopSvakom();
+  }
+
+  // 执行完清空
+  toyQueue.command = null;
+
+}, 500);
+
+
+// 临时测试函数
+async function setSvakomSpeed(value) {
+  console.log(`🔵 蓝牙设置强度: ${value}%`);
+}
+
+
+async function stopSvakom() {
+  console.log('🔴 蓝牙停止');
+}
+
+
 app.listen(PORT, () => {
   console.log(`🚀 服务运行在端口 ${PORT}`);
 });
