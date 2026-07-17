@@ -121,6 +121,27 @@ async function testToy(){
     log("✅ 测试指令已发送");
 
 }
+  async function sendCommand(hex){
+
+    let bytes = hex.match(/.{1,2}/g)
+        .map(x => parseInt(x,16));
+
+    await writeChar.writeValueWithResponse(
+        new Uint8Array(bytes)
+    );
+
+    log("✅ 指令已发送");
+}
+
+
+async function testToy(){
+
+    let cmd =
+    "0312f300fc4000fcff000000fc40003fb3000000";
+
+    await sendCommand(cmd);
+
+}
 </script>
 
 </body>
