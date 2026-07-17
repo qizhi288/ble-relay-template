@@ -112,11 +112,6 @@ app.post('/', (req, res) => {
     properties: {}
   }
 }
-            inputSchema: {
-              type: 'object',
-              properties: {}
-            }
-          }
         ]
       }
     });
