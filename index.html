@@ -121,6 +121,48 @@ async function testToy(){
     log("✅ 测试指令已发送");
 
 }
+async function pollCloud(){
+
+    try{
+
+        const res = await fetch(
+            "https://ble-relay-template-production-8ad4.up.railway.app/toy-next?secret=123456"
+        );
+
+        const data = await res.json();
+
+        if(data.command){
+
+            console.log(
+              "收到云端命令:",
+              data.command
+            );
+
+            if(data.command.action === "intensity"){
+
+                await sendCommand(
+                "0312f300fc4000fcff000000fc40003fb3000000"
+                );
+
+            }
+
+            if(data.command.action === "stop"){
+
+                await sendCommand(
+                "0312000000000000000000000000000000000000"
+                );
+
+            }
+
+        }
+
+    }catch(e){
+
+        console.log(e);
+
+    }
+
+}  
   async function sendCommand(hex){
 
     let bytes = hex.match(/.{1,2}/g)
