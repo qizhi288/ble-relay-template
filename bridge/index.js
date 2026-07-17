@@ -37,6 +37,7 @@ app.post('/toy', (req, res) => {
 
 // ===== 网页中继轮询 =====
 app.get('/toy-next', (req, res) => {
+ console.log("🔄 收到轮询请求"); 
   const { secret } = req.query;
 
   if (secret !== toyQueue.secret) {
