@@ -23,7 +23,8 @@ button {
 <h2>XHTKJ BLE Relay</h2>
 
 <button onclick="connectBLE()">连接设备</button>
-
+<button onclick="testToy()">测试</button>
+  
 <div id="status">
 等待连接...
 </div>
@@ -39,10 +40,9 @@ let writeChar;
 let notifyChar;
 
 
-// 你的设备 UUID
-const SERVICE_UUID = 0xAE00;
-const WRITE_UUID = 0xAE01;
-const NOTIFY_UUID = 0xAE02;
+// XHTKJ 真实 UUID
+const SERVICE_UUID = '0000ff10-0000-1000-8000-00805f9b34fb';
+const WRITE_UUID = '0000ff12-0000-1000-8000-00805f9b34fb';
 
 
 function log(text){
@@ -78,26 +78,7 @@ service = await server.getPrimaryService(SERVICE_UUID);
 
 writeChar = await service.getCharacteristic(WRITE_UUID);
 
-notifyChar = await service.getCharacteristic(NOTIFY_UUID);
 
-
-await notifyChar.startNotifications();
-
-
-notifyChar.addEventListener(
-"characteristicvaluechanged",
-(event)=>{
-
-let value = event.target.value;
-
-console.log(
-"收到:",
-Array.from(
-new Uint8Array(value.buffer)
-)
-);
-
-});
 
 
 log("✅ XHTKJ 已连接<br>AE01/AE02 已找到");
@@ -118,7 +99,28 @@ log(
 
 }
 
+async function sendCommand(hex){
 
+    let bytes = hex.match(/.{1,2}/g)
+        .map(x => parseInt(x,16));
+
+    await writeChar.writeValueWithResponse(
+        new Uint8Array(bytes)
+    );
+
+}
+
+
+async function testToy(){
+
+    let cmd =
+    "0312f300fc4000fcff000000fc40003fb3000000";
+
+    await sendCommand(cmd);
+
+    log("✅ 测试指令已发送");
+
+}
 </script>
 
 </body>
