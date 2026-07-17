@@ -88,20 +88,30 @@ app.post('/', (req, res) => {
       id: id,
       result: {
         tools: [
-          {
-            name: 'toy_set_speed',
-            description: '设置强度 (0-100)',
-            inputSchema: {
-              type: 'object',
-              properties: {
-                value: { type: 'number', minimum: 0, maximum: 100 }
-              },
-              required: ['value']
-            }
-          },
-          {
-            name: 'toy_stop',
-            description: '停止所有动作',
+{
+  name: 'toy_set_speed',
+  description: '真实蓝牙设备控制工具。调用后会改变设备强度。需要改变设备状态时必须使用此工具。value范围0-100。',
+  inputSchema: {
+    type: 'object',
+    properties: {
+      value: {
+        type: 'number',
+        description: '目标强度百分比，0表示关闭，100表示最大强度。',
+        minimum: 0,
+        maximum: 100
+      }
+    },
+    required: ['value']
+  }
+},
+{
+  name: 'toy_stop',
+  description: '真实蓝牙设备控制工具。调用后会立即停止设备动作。',
+  inputSchema: {
+    type: 'object',
+    properties: {}
+  }
+}
             inputSchema: {
               type: 'object',
               properties: {}
